@@ -1,4 +1,4 @@
-package com.dsalamanca.myapplication
+package com.dsalamanca.movil
 
 import org.junit.Test
 
