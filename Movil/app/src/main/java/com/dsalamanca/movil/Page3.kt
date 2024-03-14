@@ -1,5 +1,6 @@
 package com.dsalamanca.movil
 
+import Navigation.AppScreens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,11 +9,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -20,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,15 +29,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
+import androidx.navigation.NavController
+
 @Composable
-fun MovilPage5DavidFelipeSalamanca(modifier: Modifier = Modifier) {
+fun MovilPage3(navController: NavController, modifier: Modifier = Modifier) {
     Surface(
         color = Color(0xff2174d4),
         border = BorderStroke(1.dp, Color.Black),
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
         Box(
             modifier = Modifier
@@ -56,7 +55,7 @@ fun MovilPage5DavidFelipeSalamanca(modifier: Modifier = Modifier) {
                     .clip(shape = RoundedCornerShape(10.dp))
                     .background(color = Color.White))
             Button(
-                onClick = { },
+                onClick = {navController.navigate(route = AppScreens.Page2.route) },
                 shape = RoundedCornerShape(100.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xff014ba0)),
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 10.dp),
@@ -134,69 +133,12 @@ fun MovilPage5DavidFelipeSalamanca(modifier: Modifier = Modifier) {
                 )
 
             }
-            ConfigurationsmallElevationflat(
+            NavegacionWhite("Informacion del Usuario",
                 modifier = Modifier
                     .align(alignment = Alignment.TopStart)
                     .offset(x = 0.dp,
-                        y = 40.dp))
+                        y = 40.dp)
+                ,navController)
         }
     }
-}
-
-
-@Composable
-fun ConfigurationsmallElevationflat(modifier: Modifier = Modifier) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .requiredWidth(width = 360.dp)
-            .requiredHeight(height = 50.dp)
-            .padding(horizontal = 4.dp,
-                vertical = 8.dp)
-    ) {
-        IconButton(
-            onClick = { }
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .requiredSize(size = 48.dp)
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(100.dp))
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(all = 8.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.arrow_back_24px),
-                            contentDescription = "Icons/arrow_back_24px",
-                            tint = Color(0xff1d1b20))
-                    }
-                }
-            }
-        }
-        Text(
-            text = "Informacion del Usuario",
-            color = Color.White,
-            lineHeight = 0.67.em,
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(align = Alignment.CenterVertically))
-    }
-}
-
-@Preview(widthDp = 360, heightDp = 800)
-@Composable
-private fun MovilPage5DavidFelipeSalamancaPreview() {
-    MovilPage5DavidFelipeSalamanca(Modifier)
 }

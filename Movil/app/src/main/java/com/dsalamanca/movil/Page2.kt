@@ -1,8 +1,10 @@
 package com.dsalamanca.movil
 
+import Navigation.AppScreens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,18 +41,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 
 @Composable
-fun MovilPage2(modifier: Modifier = Modifier) {
+fun MovilPage2(navController: NavController, modifier: Modifier = Modifier) {
+//fun MovilPage2(modifier: Modifier = Modifier) {
     Surface(
         color = Color(0xff2174d4),
         border = BorderStroke(1.dp, Color.Black),
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
         Box(
             modifier = Modifier
@@ -86,7 +89,7 @@ fun MovilPage2(modifier: Modifier = Modifier) {
                     "10:00 PM" to "Apagar Servidores"
                 )
 
-                TaskList(tasks)
+                TaskList(tasks,navController)
             }
             Box(
                 modifier = Modifier
@@ -131,7 +134,7 @@ fun MovilPage2(modifier: Modifier = Modifier) {
                     .requiredWidth(width = 300.dp)
                     .requiredHeight(height = 50.dp)
             ) {
-                AlarmsOption()
+                AlarmsOption(navController = navController)
             }
             Box(
                 modifier = Modifier
@@ -143,7 +146,7 @@ fun MovilPage2(modifier: Modifier = Modifier) {
                     .requiredWidth(width = 300.dp)
                     .requiredHeight(height = 50.dp)
             ) {
-                GroupsOption()
+                GroupsOption(navController = navController)
             }
             Row(
                 horizontalArrangement = Arrangement.Center,
@@ -175,9 +178,10 @@ fun MovilPage2(modifier: Modifier = Modifier) {
                         contentDescription = "User images/User Images",
                         tint = Color.White,
                         modifier = Modifier
-                            .clip(shape = RoundedCornerShape(200.dp))
+                            .clickable { navController.navigate(route = AppScreens.Page3.route) }
                             .background(color = Color(0xff0a5cb8))
                             .size(48.dp) // Ajusta el tamaño del icono aquí
+
                     )
                 }
             }
@@ -185,43 +189,9 @@ fun MovilPage2(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-fun SelectedtrueStateenabledIconfalse(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .requiredWidth(width = 52.dp)
-            .requiredHeight(height = 32.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(shape = RoundedCornerShape(100.dp))
-                .background(color = Color(0xff20f26f)))
-        Box(
-            modifier = Modifier
-                .align(alignment = Alignment.CenterEnd)
-                .offset(
-                    x = 8.dp,
-                    y = 0.dp
-                )
-                .requiredSize(size = 48.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .align(alignment = Alignment.Center)
-                    .offset(
-                        x = 0.dp,
-                        y = 0.dp
-                    )
-                    .requiredSize(size = 24.dp)
-                    .clip(shape = RoundedCornerShape(23.dp))
-                    .background(color = Color.White))
-        }
-    }
-}
 
 @Composable
-fun AlarmsOption(modifier: Modifier = Modifier) {
+fun AlarmsOption(modifier: Modifier = Modifier,navController: NavController) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),
         verticalAlignment = Alignment.CenterVertically,
@@ -249,11 +219,12 @@ fun AlarmsOption(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(200.dp))
                 .size(30.dp) // Ajusta el tamaño del icono aquí
+                .clickable { navController.navigate(route = AppScreens.Page4.route) }
         )
     }
 }
 @Composable
-fun GroupsOption(modifier: Modifier = Modifier) {
+fun GroupsOption(modifier: Modifier = Modifier,navController: NavController) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),
         verticalAlignment = Alignment.CenterVertically,
@@ -281,45 +252,40 @@ fun GroupsOption(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(200.dp))
                 .size(30.dp) // Ajusta el tamaño del icono aquí
+                .clickable { navController.navigate(route = AppScreens.Page5.route) }
         )
     }
 }
 
-
-
-
-@Preview(widthDp = 360, heightDp = 800)
 @Composable
-private fun MovilPage2Preview() {
-    MovilPage2(Modifier)
-}
-
-@Composable
-fun TaskList(tasks: Map<String, String>) {
+fun TaskList(tasks: Map<String, String>, navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp)
     ) {
         items(tasks.entries.toList()) { (time, task) ->
-            TaskItem(time = time, task = task)
+            TaskItem(time = time, task = task, navController = navController) // Pass navController
         }
     }
 }
 
 // Composable para un elemento de la tarea individual
 @Composable
-fun TaskItem(time: String, task: String) {
+fun TaskItem(time: String, task: String,navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        var checked by remember { mutableStateOf(false) }
-
         // Control Toggle
-        SelectedtrueStateenabledIconfalse()
+        var isSwitchChecked by remember { mutableStateOf(true) } // Ejemplo de estado booleano
+
+        MySwitch(
+            checked = isSwitchChecked,
+            onCheckedChange = { isSwitchChecked = it }
+        )
         Spacer(modifier = Modifier.width(16.dp))
 
         Column(
@@ -346,10 +312,11 @@ fun TaskItem(time: String, task: String) {
         Icon(
             painter = painterResource(id = R.drawable.delete_24px),
             contentDescription = "User images/User Images",
-            tint = Color(0xFFB92F43) ,
-            modifier = Modifier
-                .clip(shape = RoundedCornerShape(200.dp))
-                .size(30.dp) // Ajusta el tamaño del icono aquí
+            tint = Color(0xFFB92F43),
+            modifier = Modifier // Combine modifiers here
+                .clickable { navController.navigate(route = AppScreens.Page6.route) } // Add click event
+                .padding(horizontal = 8.dp) // Add padding
+                .size(30.dp) // Set size
         )
     }
 }
@@ -376,10 +343,13 @@ fun GroupItem(time: String, task: String) {
             .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        var checked by remember { mutableStateOf(false) }
-
         // Control Toggle
-        SelectedtrueStateenabledIconfalse()
+        var isSwitchChecked by remember { mutableStateOf(true) } // Ejemplo de estado booleano
+
+        MySwitch(
+            checked = isSwitchChecked,
+            onCheckedChange = { isSwitchChecked = it }
+        )
         Spacer(modifier = Modifier.width(16.dp))
 
         Column(

@@ -1,5 +1,6 @@
 package com.dsalamanca.movil
 
+import Navigation.AppScreens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,17 +27,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun MovilPage6DavidFelipeSalamanca(modifier: Modifier = Modifier) {
+fun MovilPage6(navController: NavController, modifier: Modifier = Modifier) {
     Surface(
-        color = Color(0xffc2bfbf),
+        color = Color(0xff2174d4),
         border = BorderStroke(1.dp, Color.Black),
-        modifier = modifier
+        modifier = modifier.fillMaxSize()
     ) {
         Box(
             modifier = Modifier
@@ -66,7 +67,7 @@ fun MovilPage6DavidFelipeSalamanca(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .wrapContentHeight(align = Alignment.CenterVertically))
             Button(
-                onClick = { },
+                onClick = {navController.navigate(route = AppScreens.Page2.route)  },
                 shape = RoundedCornerShape(100.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xff014ba0)),
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 10.dp),
@@ -102,7 +103,7 @@ fun MovilPage6DavidFelipeSalamanca(modifier: Modifier = Modifier) {
                 }
             }
             Button(
-                onClick = { },
+                onClick = {navController.navigate(route = AppScreens.Page2.route)  },
                 shape = RoundedCornerShape(100.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xffb92f43)),
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 10.dp),
@@ -139,10 +140,4 @@ fun MovilPage6DavidFelipeSalamanca(modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-@Preview(widthDp = 360, heightDp = 800)
-@Composable
-private fun MovilPage6DavidFelipeSalamancaPreview() {
-    MovilPage6DavidFelipeSalamanca(Modifier)
 }
